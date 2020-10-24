@@ -13,12 +13,15 @@
     </thead>
     <tbody>
         <tr *ngFor="let c of courses">
-            <td>{{c.imgUrl}}</td>
+            <img [src]='c.imageUrl'  width="25%" height="25%"  >
+           
             <td>{{c.name}}</td>
             <td>{{c.price}}</td>
             <td>{{c.code}}</td>
             <td>{{c.releaseDate}}</td>
-            <td>{{c.rating}}</td>
+            <td>
+                <app-star [rating]="c.rating" ></app-star>
+            </td>
             <td><td>
 
         </tr>
