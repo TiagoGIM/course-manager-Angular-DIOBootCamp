@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { Course } from './course';
+import { CourseService } from './course.service';
+
+
 
 @Component({
     selector :'app-course-list',
@@ -7,67 +10,30 @@ import { Course } from './course';
 })
 
 export class CourseListComponent implements OnInit {
-    courses: Course[] = [];
+
+    filteredCourses: Course[] = [];
+
+    _courses: Course[] = [];
+
+    _filterBy :string;
+    // A maneira que o Angula faz a injeção é atraves de construtores.
+    constructor(private courseService:  CourseService){ }
     // metodo que  starta assim que o componente é iniciado
     ngOnInit(): void {
-        this.courses = [
-           {
-                id: 1,
-                name: 'Angular: CLI',
-                releaseDate: 'November 2, 2019',
-                description: 'Neste curso, os alunos irão obter um grande conhecimento nos principais recursos do CLI.',
-                duration: 120,
-                code: 'XLF-1212',
-                rating: 3,
-                price: 12.99,
-                imageUrl: '/assets/images/cli.png',
-            },
-            {
-                id: 2,
-                name: 'Angular: Forms',
-                releaseDate: 'November 4, 2019',
-                description: 'Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis no módulo de Forms.',
-                duration: 80,
-                code: 'DWQ-3412',
-                rating: 3.5,
-                price: 24.99,
-                imageUrl: '/assets/images/forms.png',
-            },
-            {
-                id: 3,
-                name: 'Angular: HTTP',
-                releaseDate: 'November 8, 2019',
-                description: 'Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis no módulo de HTTP.',
-                duration: 80,
-                code: 'QPL-0913',
-                rating: 4.0,
-                price: 36.99,
-                imageUrl: '/assets/images/http.png',
-            },
-            {
-                id: 4,
-                name: 'Angular: Router',
-                releaseDate: 'November 16, 2019',
-                description: 'Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis no módulo de Router.',
-                duration: 80,
-                code: 'OHP-1095',
-                rating: 4.5,
-                price: 46.99,
-                imageUrl: '/assets/images/router.png',
-            },
-            {
-                id: 5,
-                name: 'Angular: Animations',
-                releaseDate: 'November 25, 2019',
-                description: 'Neste curso, os alunos irão obter um conhecimento aprofundado sobre os recursos disponíveis sobre Animation.',
-                duration: 80,
-                code: 'PWY-9381',
-                rating: 5,
-                price: 56.99,
-                imageUrl: '/assets/images/animations.png',
-            }
-        ]
+        this._courses = this.courseService.retriveAll();
+        this.filteredCourses = this.courseService.retriveAll();
     }
-    //propriedade array do tipo Course.
-
+    //vamos usar o get e o set para acessar o input forms e fazer pesquisas rapidas.
+    set filter( value : string) {
+        this._filterBy = value;
+        //ao fazer qualquer pesquisa ele ja ira procurar com as letras iniciais. por isso o  "> 1" 
+        this.filteredCourses = this._courses.filter(
+            (course : Course ) => course.name
+            .toLocaleLowerCase()
+                .indexOf(this._filterBy
+                    .toLocaleLowerCase()) > -1);
+    }
+    get filter() {
+        return this._filterBy;
+    }
 }
