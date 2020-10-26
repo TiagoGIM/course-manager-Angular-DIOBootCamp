@@ -21,21 +21,31 @@ export class CourseListComponent implements OnInit {
     // metodo que  starta assim que o componente é iniciado
     ngOnInit(): void {
         this.retriveAll();
-
     }
     retriveAll(): void {
         this.courseService.retriveAll().subscribe({
             next: courses => {
-                this._courses = courses;
-                this.filteredCourses = this._courses;
+                this.filteredCourses = courses;
             },
             error: err =>{
                 console.log(err);
             }
         })     
     }
+    deleteById(courseId : number ) : void {
+        this.courseService.deleteById(courseId).subscribe({
+        
+            next: () =>  {
+                console.log('deleted');
+                this.retriveAll(); //para dar refresh nos cursos exibidos
 
-
+            },
+            error : err => {
+                console.log(err);
+            }   
+            
+        });
+    } 
 
     //vamos usar o get e o set para acessar o input forms e fazer pesquisas rapidas.
     set filter( value : string) {

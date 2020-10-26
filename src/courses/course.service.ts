@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-//import { findLast } from '@angular/compiler/src/directive_resolver';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Course } from './course';
@@ -30,6 +29,9 @@ export class CourseService{
         }else{
             return this.httpClient.post<Course>(`${this.endPoint}`,course);
         }
+    }
+    deleteById(id : number ) : Observable<any> {
+        return this.httpClient.delete<any>(`${this.endPoint}/${id}`);
     }
 }
     // var COURSES : Course[] = [
