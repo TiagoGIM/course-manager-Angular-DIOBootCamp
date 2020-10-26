@@ -19,6 +19,7 @@ import { CourseListComponent } from './course-list.component';
         StarModule,
         ReplacePipeModule,
         RouterModule.forChild([
+            {path:'', redirectTo : '/courses', pathMatch :'full'},
             { 
                 path:'courses', component : CourseListComponent 
             },
