@@ -20,9 +20,23 @@ export class CourseListComponent implements OnInit {
     constructor(private courseService:  CourseService){ }
     // metodo que  starta assim que o componente é iniciado
     ngOnInit(): void {
-        this._courses = this.courseService.retriveAll();
-        this.filteredCourses = this.courseService.retriveAll();
+        this.retriveAll();
+
     }
+    retriveAll(): void {
+        this.courseService.retriveAll().subscribe({
+            next: courses => {
+                this._courses = courses;
+                this.filteredCourses = this._courses;
+            },
+            error: err =>{
+                console.log(err);
+            }
+        })     
+    }
+
+
+
     //vamos usar o get e o set para acessar o input forms e fazer pesquisas rapidas.
     set filter( value : string) {
         this._filterBy = value;
