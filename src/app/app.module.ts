@@ -5,14 +5,13 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { PageNotFound } from './pageNotFound/404.component';
 import { CourseModule } from 'src/courses/course.module';
+import { CoreModule } from 'src/core/components/core.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
     PageNotFound,
    ],
   imports: [
@@ -20,6 +19,7 @@ import { CourseModule } from 'src/courses/course.module';
     AppRoutingModule,
     HttpClientModule,
     CourseModule,
+    CoreModule,
     RouterModule.forRoot([
       {
         path:'', redirectTo : 'courses', pathMatch :'full'
