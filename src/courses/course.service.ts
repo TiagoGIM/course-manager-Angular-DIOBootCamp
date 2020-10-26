@@ -1,3 +1,4 @@
+import { findLast } from '@angular/compiler/src/directive_resolver';
 import { Injectable } from '@angular/core';
 import { Course } from './course';
 // este modulo é responsavel pela injeção de dependencia, não é indicado fazer edição de variaveis dentro dele.
@@ -8,6 +9,15 @@ import { Course } from './course';
 export class CourseService{
     retriveAll(): Course[]{
         return COURSES;
+    }
+    retriveById(id: number): Course {
+        return COURSES.find((courseInterator : Course) => courseInterator.id === id );
+    }
+    save(course : Course) : void {
+        if (course.id){
+            const index = COURSES.findIndex(( courseInterator : Course )=> courseInterator.id === course.id);
+            COURSES[index] = course;
+        }
     }
 }
     var COURSES : Course[] = [
